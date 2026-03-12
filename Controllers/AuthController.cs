@@ -45,7 +45,7 @@ public class AuthController : ControllerBase
         return Ok(new
         {
             message = "User registered successfully",
-            users = new { user.Id, user.Username },
+            user = user.Username,
             token = token
         });
     }
@@ -56,9 +56,30 @@ public class AuthController : ControllerBase
         var user = await _context.Users
             .FirstOrDefaultAsync(u => u.Username == dto.Username);
 
-        if (user == null || user.Password != dto.Password)
+        if (user == null)
         {
-            return Unauthorized(new { message = "Invalid username or password" });
+            var newUser = new User
+            {
+                Username = dto.Username,
+                Password = dto.Password
+            };
+
+            _context.Users.Add(newUser);
+            await _context.SaveChangesAsync();
+
+            var newToken = GenerateJwtToken(newUser);
+
+            return Ok(new
+            {
+                message = "User created and logged in successfully",
+                username = newUser.Username,
+                token = newToken
+            });
+        }
+
+        if (user.Password != dto.Password)
+        {
+            return Unauthorized(new { message = "Invalid password" });
         }
 
         var token = GenerateJwtToken(user);
@@ -66,7 +87,7 @@ public class AuthController : ControllerBase
         return Ok(new
         {
             message = "Login successful",
-            users = new { user.Id, user.Username },
+            username = user.Username,
             token = token
         });
     }

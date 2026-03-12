@@ -145,3 +145,4 @@ D:\Ogya\Training C#\initApi\obj\Debug\net8.0\refint\initApi.dll
 D:\Ogya\Training C#\initApi\obj\Debug\net8.0\initApi.pdb
 D:\Ogya\Training C#\initApi\obj\Debug\net8.0\initApi.genruntimeconfig.cache
 D:\Ogya\Training C#\initApi\obj\Debug\net8.0\ref\initApi.dll
+D:\Ogya\Training C#\initApi\obj\Debug\net8.0\initApi.sourcelink.json
