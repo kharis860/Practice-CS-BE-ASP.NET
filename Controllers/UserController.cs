@@ -63,7 +63,11 @@ public class UsersController : ControllerBase
         }
 
         user.Username = dto.Username;
-        user.Password = dto.Password;
+
+        if (!string.IsNullOrWhiteSpace(dto.Password))
+        {
+            user.Password = dto.Password;
+        }
 
         try
         {
